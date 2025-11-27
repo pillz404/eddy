@@ -35,20 +35,37 @@ function createCard(p) {
   return div;
 }
 
-function escapeHtml(s) {
-  return String(s).replace(/[&<>"']/g, function (m) {
-    return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[m];
-  });
+const grid = document.getElementById("product-list");
+
+async function fetchProducts() {
+  const res = await fetch("/api/products");
+  if (!res.ok) throw new Error("API error");
+  return await res.json();
 }
 
-async function render() {
-  const products = await fetchProducts();
-  grid.innerHTML = "";
-  if (!products.length) {
-    grid.innerHTML = "<p>No products yet.</p>";
-    return;
+async function renderProducts() {
+  try {
+    const products = await fetchProducts();
+    grid.innerHTML = "";
+
+    products.forEach(p => {
+      const div = document.createElement("div");
+      div.className = "product-card";
+
+      div.innerHTML = `
+        <img src="${p.image_url}" alt="${p.name}">
+        <h3>${p.name}</h3>
+        <p>₦${Number(p.price).toLocaleString()}</p>
+        <small>${p.category}</small>
+      `;
+
+      grid.appendChild(div);
+    });
+
+  } catch (error) {
+    grid.innerHTML = "<p>Failed to load products.</p>";
   }
-  products.forEach(p => grid.appendChild(createCard(p)));
 }
 
-render();
+renderProducts();
+
