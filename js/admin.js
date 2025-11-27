@@ -110,8 +110,9 @@ document.getElementById("product-form").addEventListener("submit", async (e) => 
   }
 
   const submitBtn = e.target.querySelector("button[type='submit']");
-  submitBtn.disabled = true;
   submitBtn.textContent = "Uploading...";
+  submitBtn.disabled = true;
+  
 
   try {
     // Upload to Blob
