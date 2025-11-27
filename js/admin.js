@@ -112,10 +112,15 @@ document.getElementById("product-form").addEventListener("submit", async (e) => 
     return alert("All fields required");
   }
 
-  const submitBtn = e.target.querySelector("button[type='submit']");
-  submitBtn.textContent = "Uploading...";
-  submitBtn.disabled = true;
-  
+    document.getElementById("addProductBtn").addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    const submitBtn = e.target; 
+    submitBtn.textContent = "Uploading...";
+    submitBtn.disabled = true;
+
+    // continue upload logic...
+});
 
   try {
     // Upload to Blob
