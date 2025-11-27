@@ -1,3 +1,6 @@
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("Admin JS loaded!");
+});
 
  const ADMIN_PASSWORD = "mySecret123";
 
